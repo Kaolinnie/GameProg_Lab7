@@ -13,6 +13,8 @@ public class CharacterMovement : MonoBehaviour
     private float gravityValue = -9.81f;
     private CharacterController controller;
     private Animator animator;
+    private AudioSource audiosource;
+
     private float walkSpeed = 5;
     private float runSpeed = 8; 
  
@@ -20,14 +22,24 @@ public class CharacterMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        audiosource = GetComponent<AudioSource>();
     }
 
     public void Update()
     {
        ProcessMovement();
        UpdateAnimator();
-       
+       Punch();
     }
+    void Punch() {
+        if(Input.GetButtonDown("Fire1")){
+            animator.SetTrigger("Punch");
+        }
+    }
+    void PlaySound() {
+        audiosource.Play();
+    }
+
     void UpdateAnimator()
     {
         if (move.magnitude == 0.0f)
